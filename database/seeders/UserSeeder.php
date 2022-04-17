@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class ScoreSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,6 +16,8 @@ class ScoreSeeder extends Seeder
      */
     public function run()
     {
-        Score::factory(50)->create();
+        User::factory(10)->create()->each(function ($user) {
+            $user->scores()->saveMany(Score::factory(50)->make());
+        });
     }
 }
