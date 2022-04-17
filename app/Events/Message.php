@@ -13,17 +13,17 @@ use Illuminate\Queue\SerializesModels;
 class Message implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $username;
-    public $message;
+    public $task_name;
+    public $description;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($username, $message)
+    public function __construct($task_name, $description)
     {
-        $this->username = $username;
-        $this->message = $message;
+        $this->task_name = $task_name;
+        $this->description = $description;
     }
 
     /**

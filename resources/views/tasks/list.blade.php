@@ -12,9 +12,14 @@
                     <div class="col-md-4">
                         <form action="{{ route('task_create') }}}">
                             <div class="form-group">
-                                <label>Task Name</label>
-                                
+                                <label for="task_name">Task Name</label>
+                                <input type="text" class="form-control" id="task_name" name="task_name">
                             </div>
+                            <div class="form-group">
+                                <label for="task_desc">Description</label>
+                                <textarea id="task_desc" id="task_desc" class="form-control"></textarea>
+                            </div>
+                            <button type="submit" id="btn_submit" class="btn btn-primary">Save</button>
                         </form>
                     </div>
                     <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
@@ -37,17 +42,22 @@
         </div>
     </div>
     <script type="text/javascript">
-        btn = document.getElementById('btn_submit');
-        btn.addEventListener('click', (e)=>{
-            const option = {
-                method: 'post',
-                url: '/example-app/public/send-message',
-                data: {
-                    username: "vipankumar",
-                    message: "hi watssup bud"
+        $(document).ready(function(){
+            btn = document.getElementById('btn_submit');
+            task_nameO = document.getElementById('task_name');
+            task_descO = document.getElementById('task_desc');
+            $('#btn_submit').on('click', (e)=>{
+                e.preventDefault();
+                const option = {
+                    method: 'post',
+                    url: "{{ route('send_message') }}",
+                    data: {
+                        task_name: task_nameO.value,
+                        description: task_descO.value
+                    }
                 }
-            }
-            axios(option)
+                axios(option)
+            })
             window.Echo.channel('task').listen('.message',(e)=>{
                 console.log(e)
             })

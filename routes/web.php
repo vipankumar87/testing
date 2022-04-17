@@ -25,15 +25,16 @@ Route::group(['middleware'=>'auth','prefix'=>'admin'], function(){
 //    Route::get('tasks')
     Route::controller(TaskController::class)->group(function(){
         Route::get('tasks','index')->name('tasks');
+        Route::post('task_create','create')->name('task_create');
     });
 });
 Route::post('/send-message', function (Request $request){
    event(
        new Message(
-           $request->input('username'),
-           $request->input('message')
+           $request->input('task_name'),
+           $request->input('description')
        )
    );
    return ['success'=>true];
-});
+})->name('send_message');
 require __DIR__.'/auth.php';
