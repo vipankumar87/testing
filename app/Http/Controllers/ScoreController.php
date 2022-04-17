@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreScoreRequest;
 use App\Http\Requests\UpdateScoreRequest;
 use App\Models\Score;
+use App\Models\User;
+use function React\Promise\all;
 
 class ScoreController extends Controller
 {
@@ -15,7 +17,13 @@ class ScoreController extends Controller
      */
     public function index()
     {
-        //
+        return  response()->json([
+            'success'=> true,
+            'leaderboard'=> Score::select('id','user_id','created_at','updated_at',\DB::raw("sum(score) as total_score"))
+                ->with('user')
+                ->orderBy('total_score','DESC')
+                ->groupBy('user_id')->get()
+        ], 201);
     }
 
     /**
