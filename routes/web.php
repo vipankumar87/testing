@@ -20,6 +20,7 @@ Route::get('/', function () {
 
 Route::group(['middleware'=>'auth','prefix'=>'admin'], function(){
     Route::view('/dashboard', 'dashboard')->name('dashboard');
+//    Route::get('tasks')
     Route::controller(TaskController::class)->group(function(){
         Route::get('tasks','index')->name('tasks');
     });
