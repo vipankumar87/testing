@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
-
+use App\Events\Message;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,5 +26,14 @@ Route::group(['middleware'=>'auth','prefix'=>'admin'], function(){
     Route::controller(TaskController::class)->group(function(){
         Route::get('tasks','index')->name('tasks');
     });
+});
+Route::post('/send-message', function (Request $request){
+   event(
+       new Message(
+           $request->input('username'),
+           $request->input('message')
+       )
+   );
+   return ['success'=>true];
 });
 require __DIR__.'/auth.php';
