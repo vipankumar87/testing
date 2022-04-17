@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('scores', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('score')->default(0);
             $table->timestamps();
         });
     }
