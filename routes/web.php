@@ -23,21 +23,11 @@ Route::get('/', function () {
 
 Route::group(['middleware'=>'auth','prefix'=>'admin'], function(){
     Route::view('/dashboard', 'dashboard')->name('dashboard');
-//    Route::get('tasks')
     Route::controller(TaskController::class)->group(function(){
         Route::get('tasks','index')->name('tasks');
         Route::get('tasks/create','create')->name('task_create');
+        Route::post('/send-message', 'postMessage')->name('send_message');
     });
 });
 Route::get('score', [ScoreController::class,'view_index']);
-
-Route::post('/send-message', function (Request $request){
-   event(
-       new Message(
-           $request->input('task_name'),
-           $request->input('description')
-       )
-   );
-   return ['success'=>true];
-})->name('send_message');
 require __DIR__.'/auth.php';

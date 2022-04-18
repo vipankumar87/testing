@@ -12,7 +12,20 @@
                     <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
                         <h6>Tasks</h6>
                         <div id="tasklist">
-
+                            @forelse($tasks as $task)
+                                <div class="card">
+                                    <div class="card-header">
+                                        {{$task->title}}
+                                    </div>
+                                    <div class="card-body">
+                                        <blockquote class="blockquote mb-0">
+                                            <p>{{$task->description}}</p>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                            @empty
+                                No Tasks available
+                            @endforelse
                         </div>
                     </div>
                 </div>

@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Message;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
+use Illuminate\Http\Request;
+
+;
 
 class TaskController extends Controller
 {
@@ -15,7 +19,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return view('tasks.list');
+        $tasks = Task::all();
+        return view('tasks.list', compact('tasks'));
     }
 
     /**
@@ -28,6 +33,19 @@ class TaskController extends Controller
         return view('tasks.create');
     }
 
+    public function postMessage(Request $request )
+    {
+        $task_name = $request->input('task_name');
+        $description = $request->input('description');
+
+        Task::create([
+            'title' => $task_name,
+            'description'=> $description
+        ]);
+
+        event( new Message($task_name, $description) );
+        return ['success'=>true];
+    }
     /**
      * Store a newly created resource in storage.
      *
