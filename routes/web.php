@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ScoreController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 use App\Events\Message;
@@ -25,9 +26,11 @@ Route::group(['middleware'=>'auth','prefix'=>'admin'], function(){
 //    Route::get('tasks')
     Route::controller(TaskController::class)->group(function(){
         Route::get('tasks','index')->name('tasks');
-        Route::post('task_create','create')->name('task_create');
+        Route::get('tasks/create','create')->name('task_create');
     });
 });
+Route::get('score', [ScoreController::class,'view_index']);
+
 Route::post('/send-message', function (Request $request){
    event(
        new Message(

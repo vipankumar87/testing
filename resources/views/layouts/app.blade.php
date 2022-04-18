@@ -35,4 +35,6 @@
                 {{ $slot }}
             </main>
         </div>
+    <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.js" type="text/javascript"></script>
+    </body>
 </html>

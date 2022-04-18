@@ -25,6 +25,16 @@ class ScoreController extends Controller
                 ->groupBy('user_id')->get()
         ], 201);
     }
+    public function view_index()
+    {
+        return  view('welcome',[
+            'success'=> true,
+            'leaderboard'=> Score::select('id','user_id','created_at','updated_at',\DB::raw("sum(score) as total_score"))
+                ->with('user')
+                ->orderBy('total_score','DESC')
+                ->groupBy('user_id')->get()
+        ]);
+    }
 
     /**
      * Show the form for creating a new resource.
